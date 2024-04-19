@@ -63,7 +63,7 @@ namespace parser {
 
   std::string input_parser::read_keyword() {
     std::string keyword{};
-    std::cout << "Reading keyword from [" << pos << "]"; 
+    //std::cout << "Reading keyword from [" << pos << "]"; 
 
     skip_whitespace();
     while (std::cbegin(input) + pos != std::cend(input)) {
@@ -74,7 +74,7 @@ namespace parser {
       }
     }
 
-    std::cout << " and finishing at [" << pos << "] which is " << keyword << std::endl;
+    //std::cout << " and finishing at [" << pos << "] which is " << keyword << std::endl;
     return keyword;
   }
 

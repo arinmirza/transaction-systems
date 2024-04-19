@@ -15,7 +15,7 @@ int main() {
 
   // Parse the input and construct a history
   parser::input_parser parser{input_buffer};
-  std::cout << input_buffer << std::endl;
+  //std::cout << input_buffer << std::endl;
   operations_t history = parser.parse();
 
   // Output the result

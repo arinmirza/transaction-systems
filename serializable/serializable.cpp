@@ -14,13 +14,13 @@ using conflict_graph = std::map<t_id, std::vector<t_id>>;
 
 namespace {
     bool has_cycle_(const conflict_graph& graph, std::map<t_id, bool>& visited, std::map<t_id, bool>& visiting, const t_id transaction) {
-    std::cout << "Visiting " << transaction << std::endl;
+    //std::cout << "Visiting " << transaction << std::endl;
     if (!visited[transaction]) {
     visited[transaction] = true;
     visiting[transaction] = true;
     if (graph.count(transaction) > 0) {
         for (const auto& conflict : graph.at(transaction)) {
-        std::cout << "Visiting child " << conflict << std::endl;
+        //std::cout << "Visiting child " << conflict << std::endl;
         if (visiting[conflict] || !visited[conflict] && has_cycle_(graph, visited, visiting, conflict)) {
             return true;
         }
@@ -66,15 +66,15 @@ bool is_serializable(operations_t history) {
         overload{[&conflicts, &items](const write_op &op) {
                    // All reads before this operation conflict with the current
                    // write
-                   std::cout << "Last readers of data item " << op.item << ":";
+                   //std::cout << "Last readers of data item " << op.item << ":";
                    for (const t_id reader : items[op.item].last_readers) {
                     add_conflict(conflicts, reader, op.transaction);
                    }
-                   std::cout << std::endl;
+                   //std::cout << std::endl;
                    // The last write before this operation conflicts with the
                    // current write
                    if (items[op.item].last_writer.has_value()) {
-                    std::cout << "Last writer " << items[op.item].last_writer.value() << " on data item " << op.item << " conflicts with current write by T_" << op.transaction << std::endl;
+                    //std::cout << "Last writer " << items[op.item].last_writer.value() << " on data item " << op.item << " conflicts with current write by T_" << op.transaction << std::endl;
                      const t_id src = items[op.item].last_writer.value();
                      const t_id dst = op.transaction;
                      add_conflict(conflicts, src, dst);
@@ -91,7 +91,7 @@ bool is_serializable(operations_t history) {
                    // The last write to the data item conflicts with the
                    // current write
                    if (items[op.item].last_writer.has_value()) {
-                    std::cout << "Last writer " << items[op.item].last_writer.value() << " on data item " << op.item << " conflicts with current read by T_" << op.transaction << std::endl;
+                    //std::cout << "Last writer " << items[op.item].last_writer.value() << " on data item " << op.item << " conflicts with current read by T_" << op.transaction << std::endl;
                     const t_id src = items[op.item].last_writer.value();
                     const t_id dst = op.transaction;
                     add_conflict(conflicts, src, dst);
